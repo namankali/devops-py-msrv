@@ -1,0 +1,78 @@
+# --------------------
+# Python
+# --------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# --------------------
+# Virtual environments
+# --------------------
+.env
+.venv
+env/
+venv/
+ENV/
+
+# --------------------
+# Environment variables
+# --------------------
+.env.*
+!.env.example
+
+# --------------------
+# FastAPI / Uvicorn
+# --------------------
+*.log
+uvicorn.log
+
+# --------------------
+# Pytest / coverage
+# --------------------
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# --------------------
+# MyPy / Ruff / Pyright
+# --------------------
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# --------------------
+# Build / packaging
+# --------------------
+build/
+dist/
+*.egg-info/
+
+# --------------------
+# IDEs / editors
+# --------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --------------------
+# OS files
+# --------------------
+.DS_Store
+Thumbs.db
+
+# --------------------
+# SQLite / local DB
+# --------------------
+*.sqlite3
+*.db
+
+# --------------------
+# Secrets (extra safety)
+# --------------------
+secrets/
