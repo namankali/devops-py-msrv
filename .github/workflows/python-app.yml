@@ -100,7 +100,7 @@ jobs:
             devops-py-service:latest
 
       - name: Build and Push Image
-        run: docker uildx build --platform linux/amd64,linux/arm64 -t namankali/devops-py-service:latest --push .
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t namankali/devops-py-service:latest --push .
 
   deploy:
     name: Deploy

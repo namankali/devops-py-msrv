@@ -4,4 +4,4 @@
 
 
 <!-- BUild image -->
-docker build -t devops-python:1.0 .
+docker build -t namankali/devops-py-service:latest .
