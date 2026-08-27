@@ -15,7 +15,7 @@ def format_repos(data):
     for i, repo in enumerate(data, 1):
         visibility = "Private" if repo.get("is_private") else "Public"
         lines.append(
-            f"{i}. {repo.get('repo_name')} ({visibility}) - Branch: {repo.get('default_branch')} - Github Repo ID: {repo.get("github_repo_id")}"
+            f"{i}. {repo.get('repo_name')} ({visibility}) - Branch: {repo.get('default_branch')} - Github Repo ID: {repo.get('github_repo_id')}"
         )
 
     return "\n".join(lines)
