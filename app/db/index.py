@@ -7,9 +7,13 @@ load_dotenv(override=True)
 
 HF_TOKEN = os.getenv("HF_TOKEN")
 
-client = QdrantClient(host="localhost", port=6333)
+QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
+QDRANT_PORT = os.getenv("QDRANT_PORT", "6333")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-V2")
+
+client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
 
 # model = SentenceTransformer("all-MiniLM-L6-V2", HF_TOKEN=HF_TOKEN)
-model = SentenceTransformer("all-MiniLM-L6-V2", use_auth_token=HF_TOKEN)
+model = SentenceTransformer(EMBEDDING_MODEL, use_auth_token=HF_TOKEN)
 
 collection_name = "devops"
