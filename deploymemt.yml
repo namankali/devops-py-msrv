@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-py-msrv
+  namespace: devops
 spec:
   replicas: 2
 
@@ -43,7 +44,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: python-msrv
-          image: devops-python
+          image: namankali/devops-py-service
           imagePullPolicy: Always
 
           ports:
@@ -87,7 +88,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: devops-py-service
-
+  namespace: devops
 spec:
   selector:
     app: devops-py-msrv
