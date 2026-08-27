@@ -76,7 +76,7 @@ jobs:
             password: ${{secrets.DOCKER_PASSWORD}}
 
       - name: Build Docker Image
-        run: docker buildx build --load -t devops--py-service:latest .
+        run: docker buildx build --load -t devops-py-service:latest .
 
       - name: Install Trivy
         run: |
