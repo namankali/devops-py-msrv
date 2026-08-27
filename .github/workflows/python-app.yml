@@ -47,7 +47,12 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Test with pytest
-        run: pytest
+        run: |
+          if find . -type f \( -name "test_*.py" -o -name "*_test.py" \) | grep -q .; then
+            pytest
+          else
+            echo "No tests found. Skipping pytest."
+          fi
 
       - name: Dependency Secuirty Audit
         run: pip audit || true
