@@ -15,6 +15,9 @@ COPY requirements.txt .
 # Copy dependency file first for better Docker layer caching
 RUN pip install  --upgrade pip 
 
+# Install CPU only pytorch
+RUN pip install --no-cache-dir torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # create a non root user

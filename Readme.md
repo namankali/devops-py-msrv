@@ -4,4 +4,4 @@
 
 
 <!-- BUild image -->
-docker build -t namankali/devops-py-service:latest .
+docker build --no-cache -t namankali/devops-py-service:latest .
