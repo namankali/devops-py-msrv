@@ -3,15 +3,16 @@ from typing import Optional
 from app.ai_agent import main
 from app.helper.schema import ChatRequest
 
+from rich.console import Console
+
 router = APIRouter()
 
-
+console = Console()
 @router.post("/chat")
 def chat(payload: ChatRequest, x_access_token: Optional[str] = Header(default=None)):
     try:
-        print("Headers ->>> ", x_access_token)
         agent_response = main.run_agent(
-            message=payload.message, history=payload.history, token=x_access_token
+            message=payload.message, history=None, token=x_access_token
         )
 
         if not agent_response:

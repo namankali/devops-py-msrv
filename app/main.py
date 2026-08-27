@@ -1,13 +1,21 @@
 from fastapi import FastAPI
-import threading
-import os
 
-from app.routes import chat
+from app.routes import chat, rag
 
 app = FastAPI(
-    title="Ai-devops python microservice",
+    title="AI DevOps Python Microservice",
     version="1.0.0",
     description="Handles LLM calls",
 )
 
-app.include_router(chat.router, prefix="/ch", tags=["chats"])
+app.include_router(chat.router, prefix="/ch", tags=["Chats"])
+app.include_router(rag.router, prefix="/rag", tags=["RAG"])
+
+
+@app.get("/")
+async def root():
+    return {
+        "success": True,
+        "service": "AI DevOps Python Microservice",
+        "version": "1.0.0",
+    }
