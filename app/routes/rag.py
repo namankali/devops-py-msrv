@@ -17,4 +17,4 @@ def failure_build_data(
         return {"success": True, "response": result}
     except Exception as e:
         traceback.print_exc()
-        raise HTTPException(status_code="500", detail=f"Agent error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Agent error: {str(e)}")

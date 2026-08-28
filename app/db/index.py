@@ -7,8 +7,8 @@ load_dotenv(override=True)
 
 HF_TOKEN = os.getenv("HF_TOKEN")
 
-QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
-QDRANT_PORT = os.getenv("QDRANT_PORT", "6333")
+QDRANT_HOST = os.getenv("QDRANT_HOST")
+QDRANT_PORT = os.getenv("QDRANT_PORT")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-V2")
 
 client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
