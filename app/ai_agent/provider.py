@@ -7,8 +7,11 @@ class OllamaProvider:
 
     def chat(self, messages, tools=None):
         model = os.getenv("OLLAMA_MODEL")
+        host = os.getenv("OLLAMA_HOST")
+        
+        client = ollama.Client(host=host)
 
-        return ollama.chat(
+        return client.chat(
             model=model, messages=messages, tools=tools, options={"temperature": 0}
         )
 
