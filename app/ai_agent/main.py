@@ -71,9 +71,12 @@ def normalize_history(history=None):
     return normalized
 
 
-def run_agent(message, history, token):
+def run_agent(message, history, token, ai_run_id):
     print("incoming message ->>>>", message)
     print("history ->>>>", history)
+
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
 
     conversation_history = normalize_history(history=history)
 
@@ -98,6 +101,10 @@ def run_agent(message, history, token):
 
             rag_context = ToolHandler.get_rag_context(message, token)
             print("rag context ->>>> ", rag_context)
+
+            # start_time = time.perf_counter()
+
+            # latency_ms = (time.perf_counter() - start_time) * 1000
 
             if rag_context:
                 rag_used = True
@@ -144,6 +151,12 @@ def run_agent(message, history, token):
 
             response = llm.chat(messages=messages, tools=tools if use_tools else None)
 
+            prompt_tokens = getattr(response, "prompt_eval_count", 0) or 0
+            completion_tokens = getattr(response, "eval_count", 0) or 0
+
+            total_prompt_tokens += prompt_tokens
+            total_completion_tokens += completion_tokens
+
             msg = response.message
             print("LLM response ->>>>", msg)
 
@@ -152,9 +165,19 @@ def run_agent(message, history, token):
 
             if not tool_calls:
                 if intent == "rag" and not rag_used:
-                    return "I couldn't find relevant data in the knowledge base. Try refining your query."
+                    return {
+                        "response": "I couldn't find relevant data in the knowledge base. Try refining your query.",
+                        "prompt_tokens": total_prompt_tokens,
+                        "completion_tokens": total_completion_tokens,
+                        "total_tokens": total_completion_tokens + total_prompt_tokens,
+                    }
 
-                return extract_response_content(msg.content)
+                return {
+                    "response": extract_response_content(msg.content),
+                    "prompt_tokens": total_prompt_tokens,
+                    "completion_tokens": total_completion_tokens,
+                    "total_tokens": total_completion_tokens + total_prompt_tokens,
+                }
 
             handler = ToolHandler(msg, token=token)
 
@@ -187,8 +210,24 @@ def run_agent(message, history, token):
                 }
             )
 
-        return "Reached max steps. Please refine your request."
+        return {
+            "success": False,
+            "response": "Reached max steps. Please refine your request.",
+            "error": None,
+            "prompt_tokens": total_prompt_tokens,
+            "completion_tokens": total_completion_tokens,
+            "total_tokens": total_prompt_tokens + total_completion_tokens,
+        }
 
     except Exception as e:
         print("Agent Error:", e)
-        return f"System error: {str(e)}"
+        total_tokens = total_prompt_tokens + total_completion_tokens
+
+        return {
+            "success": False,
+            "response": None,
+            "error": f"System error: {str(e)}",
+            "prompt_tokens": total_prompt_tokens,
+            "completion_tokens": total_completion_tokens,
+            "total_tokens": total_tokens,
+        }

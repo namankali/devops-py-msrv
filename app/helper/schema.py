@@ -5,6 +5,7 @@ from typing import Dict, List, Any
 class ChatRequest(BaseModel):
     message: str
     history: List[Dict[str, Any]] = []
+    ai_run_id: int
 
 
 class BuildFailureRequest(BaseModel):

@@ -1,5 +1,6 @@
 from rich.console import Console
 from app.rag.index import get_failure_by_run_id
+import time
 
 console = Console()
 
@@ -13,6 +14,14 @@ class GeneralHelpers:
     def get_run_ids(runs):
         return [int(run["run_id"]) for run in runs]
 
+    @staticmethod
+    def latency_ms(start_time):
+        end_time = time.perf_counter()
+
+        latency__ = (end_time - start_time) * 1000
+
+        return latency__
+
     def get_failed_run_reason(self):
         print("initailize build failure integration")
 
@@ -20,6 +29,6 @@ class GeneralHelpers:
 
         vector_result = get_failure_by_run_id(run_id=run_ids)
         console.print("vector_result", vector_result, style="purple")
-        
+
         for obj in vector_result:
             console.print("obj ->>>>>>>>> ", obj, style="pink")
